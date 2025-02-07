@@ -174,6 +174,7 @@ function App() {
                 </svg>
                 <span />
               </button>
+              <p>+ and more</p>
             </div>
           </div>
           <div className="column">
