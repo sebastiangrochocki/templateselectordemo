@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import "./App.scss";
 import Img1A from "./assets/1.webp";
@@ -19,6 +19,7 @@ import Img5C from "./assets/5c.jpeg";
 import Img6A from "./assets/6.webp";
 import Img6B from "./assets/6b.jpeg";
 import Img6C from "./assets/6c.jpeg";
+import Editor from "./assets/editor.png";
 
 const templates = {
   template1: [Img1A, Img2A, Img3A, Img4A, Img5A, Img6A],
@@ -39,9 +40,75 @@ function App() {
       setTimeout(() => setIsAnimating(false), 400);
     }, 200);
   };
+  //
+
+  const [heights, setHeights] = useState(
+    Array(14)
+      .fill()
+      .map(() => Math.random() * (60 - 5) + 10 + "vh")
+  );
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setHeights(heights.map(() => Math.random() * (60 - 5) + 10 + "vh"));
+    }, 200);
+
+    return () => clearInterval(interval);
+  }, [heights]);
+
+  //
+  const noiseCanvasRef = useRef(null);
+
+  useEffect(() => {
+    const canvas = noiseCanvasRef.current;
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const generateNoise = () => {
+      const imageData = ctx.createImageData(canvas.width, canvas.height);
+      const pixels = imageData.data;
+
+      for (let i = 0; i < pixels.length; i += 4) {
+        const grayscale = Math.random() * 255;
+        pixels[i] = pixels[i + 1] = pixels[i + 2] = grayscale;
+        pixels[i + 3] = 50;
+      }
+
+      ctx.putImageData(imageData, 0, 0);
+    };
+
+    const animateNoise = () => {
+      generateNoise();
+      requestAnimationFrame(animateNoise);
+    };
+
+    animateNoise();
+  }, []);
 
   return (
     <div className="App">
+      <section className="hero" style={{ paddingBottom: 0 }}>
+        <div className="sound">
+          {heights.map((height, index) => (
+            <span key={index} style={{ height }} />
+          ))}
+          <canvas ref={noiseCanvasRef} className="noise"></canvas>
+        </div>
+        <div className="row">
+          <div className="column" style={{ alignItems: "center" }}>
+            <h1>Your Podcast. Your Website. Your Way.</h1>
+            <p>
+              Create a podcast website that’s truly yours—with powerful hosting,
+              full customization, and tools to grow your audience.
+            </p>
+            <button style={{ marginTop: "2.4rem" }} className="button">
+              Start Your Podcast Site
+            </button>
+            <img src={Editor} alt="Editor" />
+          </div>
+        </div>
+      </section>
       <section>
         <div className="row">
           <div className="column">
