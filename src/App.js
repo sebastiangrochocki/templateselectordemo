@@ -30,11 +30,12 @@ const templates = {
 function App() {
   const [images, setImages] = useState(templates["template1"]);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [activeTemplate, setActiveTemplate] = useState("template1");
 
   const handleTemplateChange = (template) => {
     if (isAnimating) return;
     setIsAnimating(true);
-
+    setActiveTemplate(template);
     setTimeout(() => {
       setImages(templates[template]);
       setTimeout(() => setIsAnimating(false), 400);
@@ -121,7 +122,9 @@ function App() {
             </p>
             <div className="templateselector">
               <button
-                className="template1"
+                className={`template1 ${
+                  activeTemplate === "template1" ? "selected" : ""
+                }`}
                 onClick={() => handleTemplateChange("template1")}
               >
                 <svg
@@ -139,7 +142,9 @@ function App() {
                 <span />
               </button>
               <button
-                className="template2"
+                className={`template2 ${
+                  activeTemplate === "template2" ? "selected" : ""
+                }`}
                 onClick={() => handleTemplateChange("template2")}
               >
                 <svg
@@ -157,7 +162,9 @@ function App() {
                 <span />
               </button>
               <button
-                className="template3"
+                className={`template3 ${
+                  activeTemplate === "template3" ? "selected" : ""
+                }`}
                 onClick={() => handleTemplateChange("template3")}
               >
                 <svg
