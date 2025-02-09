@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import "./App.scss";
 import Img1A from "./assets/1.webp";
@@ -43,58 +43,58 @@ function App() {
   };
   //
 
-  const [heights, setHeights] = useState(
-    Array(14)
-      .fill()
-      .map(() => Math.random() * (60 - 5) + 10 + "vh")
-  );
+  // const [heights, setHeights] = useState(
+  //   Array(14)
+  //     .fill()
+  //     .map(() => Math.random() * (60 - 5) + 10 + "vh")
+  // );
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setHeights(heights.map(() => Math.random() * (60 - 5) + 10 + "vh"));
-    }, 200);
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     setHeights(heights.map(() => Math.random() * (60 - 5) + 10 + "vh"));
+  //   }, 200);
 
-    return () => clearInterval(interval);
-  }, [heights]);
+  //   return () => clearInterval(interval);
+  // }, [heights]);
 
   //
-  const noiseCanvasRef = useRef(null);
+  // const noiseCanvasRef = useRef(null);
 
-  useEffect(() => {
-    const canvas = noiseCanvasRef.current;
-    const ctx = canvas.getContext("2d");
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+  // useEffect(() => {
+  //   const canvas = noiseCanvasRef.current;
+  //   const ctx = canvas.getContext("2d");
+  //   canvas.width = window.innerWidth;
+  //   canvas.height = window.innerHeight;
 
-    const generateNoise = () => {
-      const imageData = ctx.createImageData(canvas.width, canvas.height);
-      const pixels = imageData.data;
+  //   const generateNoise = () => {
+  //     const imageData = ctx.createImageData(canvas.width, canvas.height);
+  //     const pixels = imageData.data;
 
-      for (let i = 0; i < pixels.length; i += 4) {
-        const grayscale = Math.random() * 255;
-        pixels[i] = pixels[i + 1] = pixels[i + 2] = grayscale;
-        pixels[i + 3] = 50;
-      }
+  //     for (let i = 0; i < pixels.length; i += 4) {
+  //       const grayscale = Math.random() * 255;
+  //       pixels[i] = pixels[i + 1] = pixels[i + 2] = grayscale;
+  //       pixels[i + 3] = 50;
+  //     }
 
-      ctx.putImageData(imageData, 0, 0);
-    };
+  //     ctx.putImageData(imageData, 0, 0);
+  //   };
 
-    const animateNoise = () => {
-      generateNoise();
-      requestAnimationFrame(animateNoise);
-    };
+  //   const animateNoise = () => {
+  //     generateNoise();
+  //     requestAnimationFrame(animateNoise);
+  //   };
 
-    animateNoise();
-  }, []);
+  //   animateNoise();
+  // }, []);
 
   return (
     <div className="App">
       <section className="hero" style={{ paddingBottom: 0 }}>
         <div className="sound">
-          {heights.map((height, index) => (
+          {/* {heights.map((height, index) => (
             <span key={index} style={{ height }} />
           ))}
-          <canvas ref={noiseCanvasRef} className="noise"></canvas>
+          <canvas ref={noiseCanvasRef} className="noise"></canvas> */}
         </div>
         <div className="row">
           <div className="column" style={{ alignItems: "center" }}>
@@ -104,13 +104,35 @@ function App() {
               full customization, and tools to grow your audience.
             </p>
             <button style={{ marginTop: "2.4rem" }} className="button">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M10 1.5C8.61929 1.5 7.5 2.61929 7.5 4V10C7.5 11.3807 8.61929 12.5 10 12.5C11.3807 12.5 12.5 11.3807 12.5 10V4C12.5 2.61929 11.3807 1.5 10 1.5Z"
+                  fill="black"
+                  stroke="black"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M10 15.5C6.96243 15.5 4.5 13.0376 4.5 10V6.5M10 15.5C13.0376 15.5 15.5 13.0376 15.5 10V6.5M10 15.5V18.5"
+                  stroke="black"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
               Start Your Podcast Site
             </button>
             <img src={Editor} alt="Editor" />
           </div>
         </div>
       </section>
-      <section>
+      <section style={{ background: "#F2F1EE" }}>
         <div className="row">
           <div className="column">
             <h2>A seamless listening experience, built in.</h2>
